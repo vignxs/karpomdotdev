@@ -84,24 +84,26 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
     if (!cardRef.current) return
 
     const rect = cardRef.current.getBoundingClientRect()
-    const width = rect.width
-    const height = rect.height
 
-    // Calculate mouse position relative to card center (in percentage, -50 to 50)
-    const x = ((e.clientX - rect.left) / width - 0.5) * 100
-    const y = ((e.clientY - rect.top) / height - 0.5) * 100
+    // Calculate mouse position relative to card center
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
 
-    // Set rotation values (limited to -10 to 10 degrees)
-    setRotateY(x * 0.2)
-    setRotateX(-y * 0.2)
+    // Calculate distance from center (in -1 to 1 range)
+    const mouseXFromCenter = (e.clientX - centerX) / (rect.width / 2)
+    const mouseYFromCenter = (e.clientY - centerY) / (rect.height / 2)
 
-    // Set mouse position for shine effect
+    // Set rotation values (limited to -15 to 15 degrees)
+    setRotateY(mouseXFromCenter * 15)
+    setRotateX(-mouseYFromCenter * 15)
+
+    // Set mouse position for shine effect (relative to card)
     setMouseX(e.clientX - rect.left)
     setMouseY(e.clientY - rect.top)
   }
 
   const handleMouseLeave = () => {
-    // Reset rotation when mouse leaves
+    // Smoothly reset rotation when mouse leaves
     setRotateX(0)
     setRotateY(0)
   }
@@ -122,36 +124,39 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
-            <motion.div
+            <div
               ref={cardRef}
-              className="tilt-card rounded-xl overflow-hidden border shadow-lg"
+              className="relative rounded-xl overflow-hidden border shadow-lg"
               style={{
+                transformStyle: "preserve-3d",
                 transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                transition: "transform 0.1s ease-out",
               }}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
             >
-              <div className="tilt-card-content relative">
-                <div className="tilt-card-image">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
+              <div style={{ transformStyle: "preserve-3d" }}>
+                <Image
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.title}
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-cover"
+                  style={{
+                    transform: "translateZ(20px)",
+                    transition: "transform 0.1s ease-out",
+                  }}
+                />
                 <div
-                  className="tilt-card-shine"
+                  className="absolute inset-0 pointer-events-none"
                   style={{
                     background: `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%)`,
+                    opacity: rotateX !== 0 || rotateY !== 0 ? 1 : 0,
+                    transition: "opacity 0.3s ease-out",
                   }}
                 ></div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="mt-8">
               <h3 className="text-xl font-semibold mb-4">Technologies Used</h3>

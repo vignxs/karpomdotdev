@@ -1,7 +1,8 @@
 "use client"
 
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { Github, Twitter, Linkedin, Instagram } from "lucide-react"
 
@@ -11,7 +12,28 @@ export default function Footer() {
     threshold: 0.1,
   })
 
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const texts = ["Karpom.Dev", "Learn Deep", "Build Bold."]
+
+  useEffect(() => {
+    // Clear any existing interval when component mounts or unmounts
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+
+    // Set new interval
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length)
+    }, 4000)
+
+    // Cleanup on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [])
 
   return (
     <footer className="bg-background border-t">
@@ -112,17 +134,22 @@ export default function Footer() {
           animate={inView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="relative overflow-hidden h-24 md:h-32">
-            <div className="absolute whitespace-nowrap sliding-text-animation">
-              {[...Array(10)].map((_, i) => (
-                <span
-                  key={i}
-                  className="inline-block mx-8 text-6xl md:text-8xl lg:text-9xl font-bold hero-text-animation"
-                >
-                  {texts[i % texts.length]}
-                </span>
-              ))}
-            </div>
+          <div className="relative h-24 md:h-32 flex justify-center">
+            <AnimatePresence mode="wait">
+              <motion.h2
+                key={currentIndex}
+                className="absolute text-6xl md:text-8xl lg:text-9xl font-bold hero-text-animation"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                {texts[currentIndex]}
+              </motion.h2>
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { Button } from "@/components/ui/button"
@@ -56,9 +56,51 @@ export default function CircularServices() {
     triggerOnce: true,
     threshold: 0.1,
   })
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const [userInteracted, setUserInteracted] = useState(false)
+  const userInteractTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Handle automatic cycling through services
+  useEffect(() => {
+    if (!inView) return
+
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+
+    // Only auto-cycle if user hasn't interacted recently
+    if (!userInteracted) {
+      intervalRef.current = setInterval(() => {
+        setActiveService((prev) => {
+          const currentIndex = services.findIndex((s) => s.id === prev.id)
+          const nextIndex = (currentIndex + 1) % services.length
+          return services[nextIndex]
+        })
+      }, 4000)
+    }
+
+    // Cleanup on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [inView, userInteracted])
 
   const handleServiceClick = (service: (typeof services)[0]) => {
+    // Clear any existing timeout
+    if (userInteractTimeoutRef.current) {
+      clearTimeout(userInteractTimeoutRef.current)
+    }
+
     setActiveService(service)
+    setUserInteracted(true)
+
+    // Reset userInteracted after 10 seconds of inactivity
+    userInteractTimeoutRef.current = setTimeout(() => {
+      setUserInteracted(false)
+    }, 10000)
   }
 
   // Calculate positions for the circles in a circular arrangement
@@ -110,9 +152,18 @@ export default function CircularServices() {
                 animate={inView ? { scale: 1 } : { scale: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white">
-                  {activeService.icon}
-                </div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeService.id}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white"
+                  >
+                    {activeService.icon}
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
 
               {/* Outer circles */}

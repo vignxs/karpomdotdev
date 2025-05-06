@@ -5,24 +5,25 @@ import { useInView } from "react-intersection-observer"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const projects = [
   {
-    id: 1,
+    id: "ecommerce-platform",
     title: "E-commerce Platform",
     description: "A modern e-commerce platform with seamless checkout experience",
     image: "/placeholder.svg?height=600&width=800",
     link: "#",
   },
   {
-    id: 2,
+    id: "saas-dashboard",
     title: "SaaS Dashboard",
     description: "Intuitive dashboard for a SaaS application with real-time analytics",
     image: "/placeholder.svg?height=600&width=800",
     link: "#",
   },
   {
-    id: 3,
+    id: "portfolio-website",
     title: "Portfolio Website",
     description: "Minimalist portfolio website for a creative professional",
     image: "/placeholder.svg?height=600&width=800",
@@ -90,9 +91,9 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
         <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
         <p className="text-muted-foreground mb-4">{project.description}</p>
         <Button variant="link" className="p-0" asChild>
-          <a href={project.link}>
+          <Link href={`/projects/${project.id}`}>
             View Project <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
+          </Link>
         </Button>
       </div>
     </motion.div>

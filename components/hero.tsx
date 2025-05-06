@@ -1,22 +1,34 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight, Code, Sparkles, Globe, Zap } from "lucide-react"
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const headlines = ["We Build Digital Experiences", "We Create Stunning Websites", "We Develop Web Applications"]
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % headlines.length)
-    }, 3000)
+    // Clear any existing interval when component mounts or unmounts
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
 
-    return () => clearInterval(interval)
+    // Set new interval
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % headlines.length)
+    }, 4000)
+
+    // Cleanup on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
   }, [])
 
   return (
@@ -49,20 +61,21 @@ export default function Hero() {
             </motion.div>
 
             <div className="relative h-24 md:h-28 mb-6 overflow-hidden">
-              {headlines.map((headline, index) => (
+              <AnimatePresence mode="wait">
                 <motion.h1
-                  key={headline}
+                  key={currentIndex}
                   className="absolute text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{
-                    opacity: currentIndex === index ? 1 : 0,
-                    y: currentIndex === index ? 0 : 50,
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -40 }}
+                  transition={{
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
-                  transition={{ duration: 0.7 }}
                 >
-                  {headline}
+                  {headlines[currentIndex]}
                 </motion.h1>
-              ))}
+              </AnimatePresence>
             </div>
 
             <motion.p

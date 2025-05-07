@@ -111,7 +111,7 @@ export default function Features() {
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            As a new agency, we're focused on delivering exceptional services in these key areas. We're building our
+            As a new agency, we&apos;re focused on delivering exceptional services in these key areas. We&apos;re building our
             portfolio and would love to work with you on your next project.
           </p>
         </motion.div>

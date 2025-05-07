@@ -215,7 +215,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
               <h3 className="text-xl font-semibold mb-4">The Process</h3>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
-                  Our development process began with a thorough understanding of the client's requirements and target
+                  Our development process began with a thorough understanding of the client&apos;s requirements and target
                   audience. We created wireframes and prototypes to visualize the user experience before moving into
                   development.
                 </p>

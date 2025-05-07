@@ -135,7 +135,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="text-xl text-muted-foreground mb-8 max-w-2xl"
           >
-            We're a new web development agency with a fresh perspective. Let's build something amazing together and make
+            We&apos;re a new web development agency with a fresh perspective. Let&apos;s build something amazing together and make
             your digital presence stand out.
           </motion.p>
 

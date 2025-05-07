@@ -31,10 +31,10 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 py-3">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 py-6">
       <nav
         className={cn(
-          "mx-auto flex items-center justify-between rounded-full px-6 py-2 transition-all duration-300",
+          "mx-auto flex items-center justify-between rounded-full px-6 py-3 transition-all duration-300 max-w-7xl",
           scrolled ? "bg-background/80 backdrop-blur-md shadow-md" : "bg-transparent",
         )}
       >
@@ -42,7 +42,7 @@ export default function Navbar() {
           <span className="hero-text-animation">Karpom.Dev</span>
         </Link>
 
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center justify-center flex-1 space-x-8">
           <Link href="#works" className="text-sm font-medium hover:text-primary transition-colors">
             Our Work
           </Link>
@@ -52,6 +52,9 @@ export default function Navbar() {
           <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
             Contact
           </Link>
+        </div>
+
+        <div className="hidden md:flex items-center space-x-4">
           <Button asChild variant="default" size="sm">
             <Link href="#contact">Get Started</Link>
           </Button>

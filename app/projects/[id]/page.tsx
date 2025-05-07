@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink, Github } from "lucide-react"
+import { ArrowLeft, ExternalLink, Github, Check } from "lucide-react"
 
 // Sample project data
 const projects = [
@@ -36,7 +36,7 @@ const projects = [
     description: "Intuitive dashboard for a SaaS application with real-time analytics",
     fullDescription:
       "We designed and developed a comprehensive dashboard for a SaaS company that provides real-time analytics and user management. The dashboard includes customizable widgets, data visualization tools, and a robust notification system.",
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "https://img.freepik.com/free-vector/aquarium-banner-with-girl-watching-cute-fish_107791-14501.jpg?height=600&width=800",
     technologies: ["React", "Chart.js", "Node.js", "MongoDB"],
     link: "https://example.com",
     github: "https://github.com",
@@ -55,7 +55,7 @@ const projects = [
     description: "Minimalist portfolio website for a creative professional",
     fullDescription:
       "We created a stunning portfolio website for a photographer that showcases their work in a clean, minimalist design. The site features smooth animations, a responsive gallery, and integrated contact form.",
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "https://img.freepik.com/free-psd/landing-page-minimal-style-art-gallery-with-man_23-2148821375.jpg?height=600&width=800",
     technologies: ["Next.js", "Framer Motion", "Tailwind CSS", "Vercel"],
     link: "https://example.com",
     github: "https://github.com",
@@ -195,7 +195,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
               <p className="text-muted-foreground mb-8">{project.fullDescription}</p>
 
               <h3 className="text-xl font-semibold mb-4">Key Features</h3>
-              <ul className="space-y-2 mb-8">
+              <ul className="space-y-3 mb-8">
                 {project.features.map((feature, index) => (
                   <motion.li
                     key={index}
@@ -204,7 +204,9 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.1 * index }}
                   >
-                    <div className="mr-2 mt-1.5 h-1.5 w-1.5 rounded-full bg-primary"></div>
+                    <div className="mr-3 mt-1">
+                      <Check className="h-5 w-5 text-primary" />
+                    </div>
                     <span>{feature}</span>
                   </motion.li>
                 ))}

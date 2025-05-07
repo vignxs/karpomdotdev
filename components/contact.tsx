@@ -65,7 +65,7 @@ export default function Contact() {
                 <Mail className="h-6 w-6 text-primary mt-0.5" />
                 <div>
                   <h4 className="font-medium">Email</h4>
-                  <p className="text-muted-foreground">hello@karpom.dev</p>
+                  <p className="text-muted-foreground">vignxs@gmail.com</p>
                 </div>
               </div>
 
@@ -73,7 +73,7 @@ export default function Contact() {
                 <Phone className="h-6 w-6 text-primary mt-0.5" />
                 <div>
                   <h4 className="font-medium">Phone</h4>
-                  <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                  <p className="text-muted-foreground">+91 7639290579</p>
                 </div>
               </div>
 
@@ -81,7 +81,7 @@ export default function Contact() {
                 <MapPin className="h-6 w-6 text-primary mt-0.5" />
                 <div>
                   <h4 className="font-medium">Office</h4>
-                  <p className="text-muted-foreground">123 Web Dev Street, Digital City, 10001</p>
+                  <p className="text-muted-foreground">15/10, Mela Thoppu Street, 609307</p>
                 </div>
               </div>
             </div>

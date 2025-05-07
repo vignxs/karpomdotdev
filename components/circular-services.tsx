@@ -177,8 +177,8 @@ export default function CircularServices() {
                       activeService.id === service.id ? service.color : "bg-muted hover:bg-muted/80"
                     }`}
                     style={{
-                      top: `calc(50% + ${position.y}px)`,
-                      left: `calc(50% + ${position.x}px)`,
+                      top: `calc(40% + ${position.y}px)`,
+                      left: `calc(40% + ${position.x}px)`,
                       transform: "translate(-50%, -50%)",
                     }}
                     onClick={() => handleServiceClick(service)}

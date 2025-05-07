@@ -2,16 +2,102 @@
 
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowDown, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
+
+// SVG icons for services
+const ServiceIcons = {
+  icon1: (
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 10L30 50" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M34 14L34 46" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M38 18L38 42" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M42 22L42 38" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M26 14L26 46" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 18L22 42" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 22L18 38" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  icon2: (
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M15 30L45 15L30 45L25 35L15 30Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  icon3: (
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect
+        x="15"
+        y="15"
+        width="30"
+        height="30"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M15 15L45 45" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M45 15L15 45" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  icon4: (
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M30 15L45 30L30 45L15 30L30 15Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M30 25L35 30L30 35L25 30L30 25Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+}
 
 export default function Features() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const services = [
+    {
+      icon: ServiceIcons.icon1,
+      title: "Web Development",
+      description:
+        "We create custom, responsive websites that look great on all devices. Our development process focuses on performance, security, and scalability.",
+    },
+    {
+      icon: ServiceIcons.icon2,
+      title: "UI/UX Design",
+      description:
+        "Our design team creates intuitive, engaging user experiences that keep visitors coming back. We focus on user-centered design principles.",
+    },
+    {
+      icon: ServiceIcons.icon3,
+      title: "E-commerce Solutions",
+      description:
+        "From small shops to large marketplaces, we build e-commerce platforms that drive sales and provide seamless shopping experiences.",
+    },
+    {
+      icon: ServiceIcons.icon4,
+      title: "Digital Marketing",
+      description:
+        "We help businesses grow their online presence through SEO, content marketing, social media, and paid advertising strategies.",
+    },
+  ]
 
   return (
     <section id="services" className="py-20 md:py-32">
@@ -25,102 +111,36 @@ export default function Features() {
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            We deliver comprehensive web development solutions tailored to your business needs, helping you achieve your
-            digital goals.
+            As a new agency, we're focused on delivering exceptional services in these key areas. We're building our
+            portfolio and would love to work with you on your next project.
           </p>
-
-          <div className="flex justify-center mt-8 gap-4">
-            <Button variant="outline" className="gap-2">
-              <ArrowDown className="h-4 w-4" />
-              See all services
-            </Button>
-            <Button asChild>
-              <Link href="#contact">Request a Quote</Link>
-            </Button>
-          </div>
         </motion.div>
 
-        <div ref={ref} className="grid grid-cols-6 gap-4">
-          {/* Top Row */}
-          <motion.div
-            className="col-span-6 md:col-span-3 lg:col-span-2 rounded-xl overflow-hidden relative h-64 bg-slate-600"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Image src="/placeholder.svg?height=400&width=600" alt="Modern building" fill className="object-cover" />
-            <div className="absolute top-4 left-4">
-              <div className="text-white font-bold text-xl">Web Design</div>
-            </div>
-            <div className="absolute bottom-4 left-4">
-              <Button variant="link" className="text-white p-0 flex items-center gap-1 hover:gap-2 transition-all">
-                Read more <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </motion.div>
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              className="bg-accent/30 rounded-lg p-8 md:p-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <div className="flex justify-center mb-6">
+                <div className="text-foreground">{service.icon}</div>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-center">{service.title}</h3>
+              <p className="text-muted-foreground text-center">{service.description}</p>
+            </motion.div>
+          ))}
+        </div>
 
-          <motion.div
-            className="col-span-3 md:col-span-3 lg:col-span-2 rounded-xl bg-secondary p-6 flex flex-col justify-center items-center text-center hover-lift"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <div className="text-4xl md:text-5xl font-bold mb-2">100+</div>
-            <div className="text-muted-foreground">Websites Delivered</div>
-          </motion.div>
-
-          <motion.div
-            className="col-span-3 md:col-span-3 lg:col-span-2 rounded-xl bg-secondary p-6 flex flex-col justify-center items-center text-center hover-lift"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <div className="text-4xl md:text-5xl font-bold mb-2">5</div>
-            <div className="text-muted-foreground">Years Experience</div>
-          </motion.div>
-
-          {/* Bottom Row */}
-          <motion.div
-            className="col-span-3 md:col-span-3 lg:col-span-2 rounded-xl bg-secondary p-6 flex flex-col justify-center items-center text-center hover-lift"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <div className="text-4xl md:text-5xl font-bold mb-2">150+</div>
-            <div className="text-muted-foreground">Happy Clients</div>
-          </motion.div>
-
-          <motion.div
-            className="col-span-3 md:col-span-3 lg:col-span-2 rounded-xl bg-secondary p-6 flex flex-col justify-center items-center text-center hover-lift"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="text-4xl md:text-5xl font-bold mb-2">10</div>
-            <div className="text-muted-foreground">Industry Awards</div>
-          </motion.div>
-
-          <motion.div
-            className="col-span-6 md:col-span-3 lg:col-span-2 rounded-xl overflow-hidden relative h-64 bg-slate-600"
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <Image
-              src="/placeholder.svg?height=400&width=600"
-              alt="Curved glass building"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute top-4 left-4">
-              <div className="text-white font-bold text-xl">Web Development</div>
-            </div>
-            <div className="absolute bottom-4 right-4">
-              <Button variant="link" className="text-white p-0 flex items-center gap-1 hover:gap-2 transition-all">
-                Read more <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </motion.div>
+        <div className="mt-12 text-center">
+          <Button asChild className="group">
+            <Link href="#contact">
+              Get Started
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

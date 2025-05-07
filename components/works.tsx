@@ -39,6 +39,7 @@ const projects = [
 ]
 
 export default function Works() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -79,6 +80,7 @@ export default function Works() {
   )
 }
 
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ProjectCard({ project, index }: { project: any; index: number }) {
   const [ref, inView] = useInView({
     triggerOnce: true,

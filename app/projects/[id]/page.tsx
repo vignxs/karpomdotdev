@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
+import { useState, useRef, use } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
@@ -70,8 +70,16 @@ const projects = [
   },
 ]
 
-export default function ProjectDetails({ params }: { params: { id: string } }) {
-  const { id } = params
+type Params = {
+  id: string;
+};
+
+type PageProps = {
+  params: Promise<Params>;
+};
+
+export default function ProjectDetails({ params }: PageProps) {
+  const id  = use(params).id;
   const project = projects.find((p) => p.id === id) || projects[0]
 
   const cardRef = useRef<HTMLDivElement>(null)
